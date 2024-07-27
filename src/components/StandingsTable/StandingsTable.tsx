@@ -5,6 +5,9 @@ import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import Medal from '../Medal/Medal';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import useWindowWidth from '@/hooks/useWindowWidth';
+
+
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
 interface PlayerStanding {
@@ -26,8 +29,9 @@ const StandingsTable: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [expandedRows, setExpandedRows] = useState({});
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const windowWidth = useWindowWidth(); // Use the custom hook
 
+    
     const toggleRow = (playerId) => {
         setExpandedRows(prev => ({
             ...prev,
@@ -37,12 +41,6 @@ const StandingsTable: React.FC = () => {
 
     useEffect(() => {
         fetchStandings();
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-        window.addEventListener('resize', handleResize);
-        // Cleanup the event listener when the component unmounts
-        return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     const widthThreshold = 600;
