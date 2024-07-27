@@ -17,6 +17,8 @@ interface PlayerStanding {
     silver_medals: number;
     bronze_medals: number;
     total_medals: number;
+    additional_info?: string; // Add this line
+
 }
 
 const StandingsTable: React.FC = () => {
@@ -125,7 +127,7 @@ const StandingsTable: React.FC = () => {
                             </tr>
                             {expandedRows[standing.player_id] && (
                                 <tr>
-                                    <td colSpan="6" className="p-4 bg-gray-50">
+                                    <td colSpan={6} className="p-4 bg-gray-50">
                                         <p>{standing.additional_info || 'No additional information available.'}</p>
                                     </td>
                                 </tr>
