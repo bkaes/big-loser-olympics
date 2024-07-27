@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 const gradients = {
   gold: `
@@ -22,7 +22,7 @@ const Medal = ({
   numberColor = 'black',
   fontSize = 14 
 }) => {
-  const containerStyle = {
+  const containerStyle: CSSProperties = {
     width: `${size}px`,
     height: `${size}px`,
     borderRadius: '50%',
@@ -33,7 +33,7 @@ const Medal = ({
     position: 'relative',
   };
 
-  const numberStyle = {
+  const numberStyle: CSSProperties = {
     color: numberColor,
     fontSize: `${fontSize}px`,
     fontWeight: 'bold',
