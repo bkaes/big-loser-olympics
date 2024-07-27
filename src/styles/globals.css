@@ -122,7 +122,7 @@
   h1,
   h2,
   h3 {
-    @apply text-[#bebebe];
+    @apply text-[#bebebe] font-bold p-2 text-xl ;
   }
 
   select {
@@ -134,19 +134,15 @@
   }
 
   th {
-    @apply bg-primary text-primary-foreground font-bold p-2 text-left;
+    @apply bg-primary text-primary-foreground font-bold p-2 text-center;
   }
 
   td {
-    @apply bg-[#37375f] text-[#ddd] p-2 text-left;
+    @apply bg-[#37375f] text-[#ddd] p-2 text-center;
   }
 
-  .sport {
-    @apply bg-gray-100 p-2.5 mt-5 rounded;
-  }
-
-  .subcategory {
-    @apply italic text-gray-600 mt-2.5;
+  tr {
+    @apply items-center justify-center text-center;
   }
 }
 
