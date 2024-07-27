@@ -1,11 +1,10 @@
-import Layout from '../components/Layout/Layout'
-import TablesViewer from '../components/TablesViewer/TablesViewer'
+import TablesViewer from '../../components/TablesViewer/TablesViewer'
 
 export default function DataViewerPage() {
     return (
-        <Layout title="Teams">
+        <div title="Teams">
             <h1>Teams</h1>
             <TablesViewer />
-        </Layout>
+        </div>
     )
 }
