@@ -62,7 +62,9 @@
     /* Bronze Medal */
     --bronze: radial-gradient(ellipse farthest-corner at right bottom, #D0853C 0%, #B8741A 8%, #8C5211 30%, #6E3E0B 40%, transparent 80%),
       radial-gradient(ellipse farthest-corner at left top, #F5D9AF 0%, #E7AC6F 8%, #C77E41 25%, #80461B 62.5%, #80461B 100%);
-
+    --black: #000;
+    --white: #fff;
+    --slate: #374151;
 
     --ring: #3B82F6;
     --radius: 0.5rem;

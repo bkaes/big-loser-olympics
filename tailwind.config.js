@@ -26,10 +26,6 @@ module.exports = {
         ring: "var(--ring)",
         background: "var(--background)",
         foreground: "var(--foreground)",
-        gold: {
-          DEFAULT: "var(--gold)",
-          foreground: "var(--gold-foreground)"
-        },
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)"
@@ -41,6 +37,14 @@ module.exports = {
         destructive: {
           DEFAULT: "var(--destructive)",
           foreground: "var(--destructive-foreground)",
+        },
+        black: {
+          DEFAULT: "var(--black)",
+          foreground: "var(--white)",
+        },
+        slate: {
+          DEFAULT: "var(--slate)",
+          foreground: "var(--slate-foreground)",
         },
         muted: {
           DEFAULT: "var(--muted)",
@@ -80,5 +84,7 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),
+    require("@tailwindcss/nesting")
+  ],
 }

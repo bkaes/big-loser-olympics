@@ -1,0 +1,30 @@
+@tailwind components;
+
+
+@layer components {
+
+  .medalists-table {
+    @apply m-0 p-0;
+    table {
+      @apply w-full  overflow-hidden bg-black;
+    }
+  
+    th {
+      @apply  text-primary-foreground font-bold text-center;
+    }
+  
+    td {
+      @apply bg-black p-2 text-center;
+    }
+  
+    tr {
+      @apply  text-black items-center justify-center text-center;
+    }
+  }
+}
+  
+  @media (prefers-color-scheme: dark) {
+    html {
+      @apply text-white bg-black;
+    }
+  }
