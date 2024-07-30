@@ -4,11 +4,16 @@ import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import Medal from "../Medal/Medal";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import useWindowWidth from "@/hooks/useWindowWidth";
 import Medalists from "@/components/Medalists/Medalists";
 import { motion, AnimatePresence } from 'framer-motion';
-
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger
+} from "@/components/ui/accordion"
+import { Card } from "@components/ui/card";
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -34,7 +39,7 @@ interface MedalEntry {
     event: string;
     medal: string;
     athlete_names: string[];
-    date: string; // Assuming date is stored as a string in 'YYYY-MM-DD' format
+    date: Date; // Assuming date is stored as a string in 'YYYY-MM-DD' format
 }
 
 const StandingsTable: React.FC = () => {
@@ -43,7 +48,7 @@ const StandingsTable: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [expandedRows, setExpandedRows] = useState({});
-    
+
     const windowWidth = useWindowWidth(); // Use the custom hook
 
     const toggleRow = (playerId) => {
@@ -124,120 +129,44 @@ const StandingsTable: React.FC = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <table>
-                <thead>
-                    <tr className="cursor-pointer whitespace-nowrap">
-                        <th className="text-left">Name</th>
-                        <th
-                            className={
-                                windowWidth > widthThreshold ? `text-left` : "text-center"
-                            }
-                        >
-                            Country
-                        </th>
-                        <th>Medals</th>
-                        <th>{windowWidth > widthThreshold ? "Total Medals" : "Total"}</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {standings.map((standing, index) => (
-                        <React.Fragment key={standing.player_id.toString()}>
-                            <tr
-                                onClick={() => toggleRow(standing.player_id)}
-                                className="cursor-pointer "
-                            >
-                                <td className="text-left flex whitespace-nowrap">
-                                    <div className="pr-2"> {index + 1} </div>
-                                    <div> {formatName(standing.player_name)} </div>
-                                </td>
-                                <td>
-                                    <div className={`flex ${flexDirection} items-center`}>
-                                        <Image
-                                            src={`https://flagcdn.com/w40/${standing.alpha2.toLowerCase()}.png`}
-                                            alt={standing.country_name}
-                                            width={28}
-                                            height={20}
-                                        />
-                                        <div className={windowWidth > widthThreshold ? `pl-2` : ""}>
-                                            {windowWidth > widthThreshold
-                                                ? standing.country_name
-                                                : standing.alpha3}
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="flex justify-center">
-                                        <div className="pr-1">
-                                            <Medal
-                                                type="gold"
-                                                size={windowWidth > widthThreshold ? 25 : 25}
-                                                number={standing.gold_medals || 0}
-                                            />
-                                        </div>
-                                        <div className="pr-1">
-                                            <Medal
-                                                type="silver"
-                                                size={25}
-                                                number={standing.silver_medals || 0}
-                                                numberColor="white"
-                                            />
-                                        </div>
-                                        <div>
-                                            <Medal
-                                                type="bronze"
-                                                size={25}
-                                                number={standing.bronze_medals || 0}
-                                            />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{standing.total_medals || 0}</td>
-                                <td>
-                                    {expandedRows[standing.player_id] ? (
-                                        <ChevronUp size={20} />
-                                    ) : (
-                                        <ChevronDown size={20} />
-                                    )}
-                                </td>
-                            </tr>
-                            <AnimatePresence>
-              {expandedRows[standing.player_id] && (
-                <motion.tr
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{
-                    height: { 
-                      duration: 0.4,
-                      ease: [0.04, 0.62, 0.23, 0.98] // Custom easing function
-                    },
-                    opacity: { duration: 0.3 }
-                  }}
-                >
-                  <td colSpan={5} className="overflow-hidden">
-                    <motion.div
-                      initial={{ opacity: 0, y: -20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }}
-                      transition={{
-                        duration: 0.3,
-                        delay: 0.1, // Slight delay for content to start after row begins expanding
-                      }}
-                      className="p-4 bg-gray-50"
-                    >
-                      <Medalists medalData={getMedalDataForCountry(standing.country_id)} />
-                    </motion.div>
-                  </td>
-                </motion.tr>
-              )}
-            </AnimatePresence>
+        <div className="w-full">
 
-                        </React.Fragment>
-                    ))}
-                </tbody>
-            </table>
+            <Accordion type="single" collapsible className="w-full">
+                {standings.map((standing, index) => (
+                    <AccordionItem key={standing.player_id} value={standing.player_id}>
+                        <AccordionTrigger className="w-full">
+                            <div className="grid grid-cols-4 gap-4 w-full items-center">
+                                <div className="flex items-center">
+                                    <span className="mr-2">{index + 1}</span>
+                                    <span>{formatName(standing.player_name)}</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <Image
+                                        src={`https://flagcdn.com/w40/${standing.alpha2.toLowerCase()}.png`}
+                                        alt={standing.country_name}
+                                        width={28}
+                                        height={20}
+                                    />
+                                    <span className="ml-2">
+                                        {windowWidth > 600 ? standing.country_name : standing.alpha3}
+                                    </span>
+                                </div>
+                                <div className="flex justify-center">
+                                    <Medal type="gold" size={25} number={standing.gold_medals || 0} />
+                                    <Medal type="silver" size={25} number={standing.silver_medals || 0} numberColor="white" />
+                                    <Medal type="bronze" size={25} number={standing.bronze_medals || 0} />
+                                </div>
+                                <div className="text-center">Total: {standing.total_medals || 0}</div>
+                            </div>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            <Card className="bg-gray-600 text-zinc-300 border-none">
+                            <Medalists medalData={getMedalDataForCountry(standing.country_id)} />
+                            </Card>
+                        </AccordionContent>
+                    </AccordionItem>
+                ))}
+            </Accordion>
         </div>
     );
 };

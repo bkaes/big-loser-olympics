@@ -5,9 +5,8 @@
 
   .medalists-table {
     @apply m-0 p-0;
+    
 
-    @apply 
-    @apply bg-primary text-primary-foreground
   }
 }
   

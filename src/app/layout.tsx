@@ -23,7 +23,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <body className={inter.className}>
+      <body className={`${inter.className}`}>
         {/*<nav style={{ padding: '10px', backgroundColor: '#f0f0f0', borderRadius: '10px' }}>
           <Link style={{ marginRight: '10px' }} href="/">Standings</Link>
           <Link href="/teams">Teams</Link>
