@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Head from 'next/head'
 import Link from 'next/link'
 import "../styles/globals.css";
+import { TooltipProvider } from "@components/ui/tooltip";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -27,7 +28,9 @@ export default function RootLayout({
           <Link style={{ marginRight: '10px' }} href="/">Standings</Link>
           <Link href="/teams">Teams</Link>
         </nav> */}
-        {children}
+        <TooltipProvider>
+          {children}
+        </TooltipProvider>
       </body>
     </html>
   );

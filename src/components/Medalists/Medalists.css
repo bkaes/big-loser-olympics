@@ -5,10 +5,13 @@
 
   .medalists-table {
     @apply m-0 p-0;
+
     table {
       @apply w-full  overflow-hidden bg-black;
     }
-  
+    thead {
+      @apply bg-black text-black
+    }
     th {
       @apply  text-primary-foreground font-bold text-center;
     }
@@ -18,7 +21,7 @@
     }
   
     tr {
-      @apply  text-black items-center justify-center text-center;
+      @apply  bg-black items-center justify-center text-center;
     }
   }
 }
