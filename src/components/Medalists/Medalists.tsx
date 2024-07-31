@@ -11,7 +11,7 @@ interface MedalistsProps {
     medalData: MedalEntry[];
 }
 
-interface MedalEntry {
+export interface MedalEntry {
     country_id: number;
     sport: string;
     event: string;
@@ -19,7 +19,11 @@ interface MedalEntry {
     athlete_names: string[];
     date: Date; // Assuming date is stored as a string in 'YYYY-MM-DD' format
 }
-
+function TextLimiter( text: string ) {
+    const displayText = text.length > 30 ? `${text.substring(0, 30)}...` : text;
+  
+    return <span>{displayText}</span>;
+  };
 const Medalists: React.FC<MedalistsProps> = ({ medalData }) => {
     const windowWidth = useWindowWidth();
     const formatDate = (dateString) => {
@@ -31,15 +35,18 @@ const Medalists: React.FC<MedalistsProps> = ({ medalData }) => {
     };
     return (
         <div className="medalists-container">
-            <CardHeader className="grid grid-cols-4 font-bold  pt-4 pb-2">
+            <CardHeader >
+            <div className="font-bold">Medals</div>
+            <div className="grid grid-cols-4 font-bold  pt-4 pb-2">
                 <div>Sport</div>
                 <div>Medal</div>
                 <div>Name</div>
                 <div className="justify-self-end">Date</div>
+                </div>
             </CardHeader>
             <CardContent>
                 {medalData.map((medal, index) => (
-                    <div key={index} className="grid grid-cols-4 pt-4 pb-2 items-center">
+                    <div key={index} className="grid grid-cols-4 pt-4 pb-2 items-center border-b">
                         <div className="flex  ">
                             <EnhancedTooltip content={
                                 <div className="flex  flex-col text-center">
@@ -47,16 +54,21 @@ const Medalists: React.FC<MedalistsProps> = ({ medalData }) => {
                                     <div>{medal.event}</div>
                                 </div>
                             }>
-                                <div>
                                     <SportIcon
                                         sport={medal.sport}
                                         primaryColor="#fff"
                                     />
-                                </div>
                             </EnhancedTooltip>
                         </div>
                         <div>{medal.medal}</div>
-                        <div>{medal.athlete_names.join(", ")}</div>
+                        <EnhancedTooltip content={
+                                <div className="flex  flex-col text-center">
+                                    <div>{medal.athlete_names.join(", ")}</div>
+                                </div>
+                            }>
+                        <div>{TextLimiter(medal.athlete_names.join(", "))}</div>
+                        </EnhancedTooltip>
+
                         {medal && medal.date ? <div className="justify-self-end">{formatDate(medal.date)}</div> : ""}
                     </div>
                 ))}

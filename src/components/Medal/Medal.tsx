@@ -24,6 +24,10 @@ const Medal = ({
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
+    transition: 'transform 0.5s ease-in-out', // Smooth transition for hover effects
+    
+      animation: 'spin 2s linear infinite'
+    
   };
 
   const innerStyle: CSSProperties = {
